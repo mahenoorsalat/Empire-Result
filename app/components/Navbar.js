@@ -58,10 +58,11 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Mobile Fullscreen Menu (No transition) */}
+      {/* Mobile Fullscreen Menu */}
       <div
         className={`
           fixed top-0 left-0 w-full h-full bg-black text-white z-40 md:hidden px-8 py-10
+          transform transition-transform duration-500
           ${menuOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
