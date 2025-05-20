@@ -123,56 +123,73 @@ export default function Portfolio() {
             </section>
      
       
-   {/* Featured Projects */}
-<section className="py-20 bg-white">
-  <div className="mx-auto px-6 max-w-4xl">
-    <div className="text-center mb-12">
-      <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-      <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-        Our work speaks for itself — over 200 international awards, countless satisfied clients
-      </p>
+ <section className="py-20  ">
+  <div className="max-w-4xl mx-auto px-4">
+    <div className="flex flex-col md:flex-row justify-between items-center mb-12">
+      <div>
+        <h2 className="text-3xl font-bold mb-1">Client Spotlight</h2>
+        <p className="text-gray-700">Real businesses. Real results. Powered by Empire Results.</p>
+      </div>
+    
     </div>
 
-    <div className="relative rounded-lg overflow-hidden mb-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {featuredProjects.slice(0, 4).map((project) => (
-          <div key={project.id} className="relative group overflow-hidden rounded-lg shadow-md">
-            <div className="relative h-64 w-full">
-              <Image 
-                src={project.thumbnail} 
-                alt={project.title}
-                layout="fill"
-                objectFit="cover"
-                className="group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center p-4">
-                  <h3 className="text-white text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-300 mb-4">Client: {project.client}</p>
-                  <Link href={`/portfolio/${project.id}`} className="inline-block bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded text-sm transition-colors">
-                    View Project
-                  </Link>
-                </div>
-              </div>
-            </div>
+    {/* Projects Grid */}
+    <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+      {[
+        {
+          title: "Diamond Law Center",
+          img: "/diamondlawcenter.png",
+          link: "https://diamondlawcenter.net/",
+        },
+        {
+          title: "RiverRock Medical",
+          img: "/riverrockmedical.png",
+          link: "https://riverrockmedical.com/",
+        },
+        {
+          title: "Big Fish Results",
+          img: "/bigfishresults.png",
+          link: "https://bigfishresults.com/",
+        },
+        {
+          title: "Tony Guarnaccia",
+          img: "/tonyguarnaccia.png",
+          link: "https://tonyguarnaccia.com/",
+        },
+      ].map((item, idx) => (
+        <a
+          key={idx}
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative rounded-lg overflow-hidden border-2 border-black shadow-lg group p-4 bg-white hover:scale-[1.02] transition"
+        >
+          <img
+            src={item.img}
+            alt={item.title}
+            className="w-full h-40 object-contain rounded-lg bg-white"
+          />
+          <div className="mt-4 text-center text-[#022729] font-semibold text-lg">
+            {item.title}
           </div>
-        ))}
-      </div>
+        </a>
+      ))}
     </div>
   </div>
 </section>
 
-      {/* Studio Showcase */}
-<section className="py-20 bg-teal-900 text-white">
+
+{/* Systems, Not Studios */}
+<section className="py-20 bg-[#022729]  text-white">
   <div className="mx-auto px-6 max-w-4xl">
     <div className="flex flex-col md:flex-row items-center">
       <div className="w-full md:w-1/2 mb-10 md:mb-0">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">Our 10,000 Square Foot Studio</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">We Don’t Need a Studio. We Build Systems.</h2>
         <p className="text-lg mb-8">
-          Led by award-winning production experts, Empire Media's studio is designed to turn ideas into creative, deadline-defying masterpieces.
+          While others boast about space, we focus on scalable growth systems that deliver real business results—powered by AI, strategy, and social precision.
         </p>
-        <Link href="/studio" className="inline-flex items-center text-white hover:text-teal-300 transition-colors">
-          <span>Learn More</span>
+        <Link href="/services" className="inline-flex items-center text-white hover:text-teal-300 transition-colors">
+          <span>Explore Our Workflows</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>
@@ -181,9 +198,9 @@ export default function Portfolio() {
       <div className="w-full md:w-1/2">
         <div className="relative h-96 rounded-lg overflow-hidden shadow-2xl">
           <Image 
-            src="/studio.png" 
-            alt="Our studio" 
-            layout="fill" 
+            src="/studio.png" // Replace with an image that represents automation or digital workflows
+            alt="Our growth systems"
+            layout="fill"
             objectFit="cover"
           />
         </div>
@@ -191,43 +208,45 @@ export default function Portfolio() {
     </div>
   </div>
 </section>
-{/* Why Clients Choose Us */}
-<section className="py-20 ">
+
+
+{/* Why Clients Choose Empire Results */}
+<section className="py-20">
   <div className="mx-auto px-6 max-w-4xl">
     <div className="text-center mb-12">
-      <h2 className="text-3xl md:text-4xl font-bold mb-4">Why They Keep Coming Back</h2>
+      <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Our Clients Stick Around</h2>
     </div>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div className="bg-white p-8 rounded-lg shadow-md text-center">
-        <div className="text-yellow-500 text-3xl mb-4">⚡</div>
-        <h3 className="text-xl font-bold mb-3">Faster Turnaround</h3>
+        <div className="text-yellow-500 text-3xl mb-4">🤖</div>
+        <h3 className="text-xl font-bold mb-3">AI-Driven Execution</h3>
         <p className="text-gray-700">
-          Our agency partners appreciate our timeline and quick but thorough work, ensuring you never miss a deadline.
+          From content to captions, video scripts to voiceovers — our hybrid human-AI process is faster, smarter, and way more efficient.
         </p>
       </div>
 
       <div className="bg-white p-8 rounded-lg shadow-md text-center">
-        <div className="text-teal-500 text-3xl mb-4">🔄</div>
-        <h3 className="text-xl font-bold mb-3">All Your Needs, In One Place</h3>
+        <div className="text-[#022729]  text-3xl mb-4">🎯</div>
+        <h3 className="text-xl font-bold mb-3">Lead-Gen That Works</h3>
         <p className="text-gray-700">
-          From pre-production to final edits, we handle everything under one roof, allowing you to focus on what you do best.
+          Every post, page, and funnel is designed to drive conversions — not just look pretty. Expect real ROI, not vanity metrics.
         </p>
       </div>
 
       <div className="bg-white p-8 rounded-lg shadow-md text-center">
-        <div className="text-purple-500 text-3xl mb-4">🌐</div>
-        <h3 className="text-xl font-bold mb-3">Consistency Across 80 Markets</h3>
+        <div className="text-purple-500 text-3xl mb-4">📈</div>
+        <h3 className="text-xl font-bold mb-3">Scalable Growth Systems</h3>
         <p className="text-gray-700">
-          With personally vetted crews all over the world, we guarantee high-quality production no matter where your clients are located.
+          Whether you're a solo brand or multi-location business, our systems scale with you — from DMs to dashboards.
         </p>
       </div>
 
       <div className="bg-white p-8 rounded-lg shadow-md text-center">
-        <div className="text-red-500 text-3xl mb-4">🛒</div>
-        <h3 className="text-xl font-bold mb-3">Transparent and Flexible Pricing</h3>
+        <div className="text-red-500 text-3xl mb-4">💰</div>
+        <h3 className="text-xl font-bold mb-3">Only Pay for What You Use</h3>
         <p className="text-gray-700">
-          Our a-la-carte service allows you to pay only for what you need, with full transparency and no hidden costs.
+          Our a-la-carte and modular packages give you flexibility without hidden fees — get exactly what you need, nothing you don’t.
         </p>
       </div>
     </div>
@@ -236,14 +255,15 @@ export default function Portfolio() {
 
 
 
+
       
 
         {/* Our Work Section */}
-      <section className="py-16 bg-white">
+     <section className="py-16 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-2">Production Excellence. Redefined.</h2>
-            <h3 className="text-2xl font-semibold">Our work speaks for itself — <span className="italic">over 200 international awards, projects</span></h3>
+<h2 className="text-3xl font-bold mb-2">AI-Powered Growth. Real Results.</h2>
+<h3 className="text-2xl font-semibold">From Social Management to Viral Campaigns — All Under One Roof</h3>
           </div>
 
           <div className="max-w-4xl mx-auto mb-12 relative">
@@ -258,18 +278,21 @@ export default function Portfolio() {
     </button>
   </div>
 </div>
+
+
+       
         </div>
       </section>
    
       
       {/* CTA Section */}
-      <section className="py-20 bg-black text-white">
+      <section className="py-20 bg-[#022729]  text-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Create Something Extraordinary?</h2>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
             Let's discuss how our award-winning team can help bring your vision to life.
           </p>
-          <Link href="/contact" className="inline-block bg-teal-600 hover:bg-teal-700 text-white py-3 px-8 rounded-full font-medium transition-colors">
+          <Link href="/contact" className="inline-block bg-teal-500  hover:bg-teal-700 text-white py-3 px-8 rounded-full font-medium transition-colors">
             Get Started Today
           </Link>
         </div>

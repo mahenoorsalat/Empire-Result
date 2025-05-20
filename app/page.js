@@ -4,31 +4,21 @@ import { useState , useEffect , useRef} from 'react';
 import Image from 'next/image';
 
 export default function Home() {
-    // Stats for animation
-  const [stats, setStats] = useState({
+   const [stats, setStats] = useState({
+    revenue: 0,
     projects: 0,
-    views: 0,
-    reviews: 0,
-    reviews_avg: 0,
-    success_stories: 0,
-    awards: 0,
-    high_view_rate: 0
+    years: 0
   });
-  
+
   const targetStats = {
-    projects: 900,
-    views: 1100, // 1.1 billion, displayed differently
-    reviews: 77,
-    reviews_avg: 4.9,
-    success_stories: 37,
-    awards: 26,
-    high_view_rate: 67
+    revenue: 500000,
+    projects: 100,
+    years: 4
   };
-  
+
   const statsRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 
-  // Check if element is in viewport
   const isInViewport = (element) => {
     if (!element) return false;
     const rect = element.getBoundingClientRect();
@@ -40,31 +30,26 @@ export default function Home() {
     );
   };
 
-  // Animation function
   useEffect(() => {
     const handleScroll = () => {
       if (!hasAnimated && statsRef.current && isInViewport(statsRef.current)) {
         setHasAnimated(true);
-        
-        const animationDuration = 2000; // 2 seconds
-        const frameDuration = 1000 / 60; // 60fps
-        const totalFrames = Math.round(animationDuration / frameDuration);
+
+        const duration = 2000;
+        const frameDuration = 1000 / 60;
+        const totalFrames = Math.round(duration / frameDuration);
         let frame = 0;
-        
+
         const counter = setInterval(() => {
           frame++;
           const progress = frame / totalFrames;
-          
+
           setStats({
+            revenue: Math.floor(progress * targetStats.revenue),
             projects: Math.floor(progress * targetStats.projects),
-            views: Math.floor(progress * targetStats.views),
-            reviews: Math.floor(progress * targetStats.reviews),
-            reviews_avg: parseFloat((progress * targetStats.reviews_avg).toFixed(1)),
-            success_stories: Math.floor(progress * targetStats.success_stories),
-            awards: Math.floor(progress * targetStats.awards),
-            high_view_rate: Math.floor(progress * targetStats.high_view_rate)
+            years: Math.floor(progress * targetStats.years)
           });
-          
+
           if (frame === totalFrames) {
             clearInterval(counter);
             setStats(targetStats);
@@ -72,12 +57,10 @@ export default function Home() {
         }, frameDuration);
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    // Initial check on mount
+
+    window.addEventListener("scroll", handleScroll);
     handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [hasAnimated]);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -90,25 +73,52 @@ export default function Home() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
+    setFormData(prev => ({
+      ...prev,
       [name]: value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Here you would typically send the data to your server
-    alert('Form submitted successfully!');
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      company: '',
-      details: ''
+
+    const data = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+      name: `${formData.firstName} ${formData.lastName}`,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company,
+      message: formData.details,
+      subject: "New Submission from Empire Results"
+    };
+
+    const json = JSON.stringify(data);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: json
     });
+
+    const result = await response.json();
+    console.log("Web3Forms Response:", result); 
+
+    if (result.success) {
+      alert("Form submitted successfully!");
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        company: '',
+        details: ''
+      });
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -125,37 +135,54 @@ export default function Home() {
 
   {/* Content */}
   <div className="container mx-auto px-6 relative z-10 text-center">
-    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-      Award-Winning Video Production<br />at Unbeatable Prices
-    </h1>
-    <p className="text-white text-lg md:text-xl max-w-2xl mx-auto">
-      Over 200 awards | Premium production quality | Half the cost of competitors
-    </p>
+  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+  Next-Gen Digital Growth for Service Brands
+</h1>
+<p className="text-white text-lg md:text-xl max-w-2xl mx-auto">
+  Lead Generation. Viral Content. AI-Enhanced Campaigns. All-in-One Growth Engine.
+</p>
+
   </div>
 </section>
 
-
-      {/* Client Logos */}
-      <section className="bg-white py-8">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-wrap justify-center items-center gap-12">
-            {['Adobe', 'Spotify', 'Vive', 'Samsung', 'Unity'].map((client, index) => (
-              <div key={index} className="grayscale hover:grayscale-0 transition-all duration-300">
-                <div className="h-8 flex items-center justify-center">
-                  <div className="text-black font-bold">{client}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+{/* services */}
+   <section className="bg-white py-8 overflow-hidden">
+  <div className="relative">
+    <div className="animate-marquee whitespace-nowrap flex gap-12">
+      {[
+        "Social Media Management",
+        "AI-Powered Content",
+        "Lead Generation Funnels",
+        "Reels & TikToks",
+        "Brand Design & Identity"
+      ].map((item, index) => (
+        <div key={index} className="text-black font-bold text-lg px-4">
+          {item}
         </div>
-      </section>
+      ))}
+      {/* Duplicate for seamless loop */}
+      {[
+        "Social Media Management",
+        "AI-Powered Content",
+        "Lead Generation Funnels",
+        "Reels & TikToks",
+        "Brand Design & Identity"
+      ].map((item, index) => (
+        <div key={`dup-${index}`} className="text-black font-bold text-lg px-4">
+          {item}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* Our Work Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-2">Production Excellence. Redefined.</h2>
-            <h3 className="text-2xl font-semibold">Our work speaks for itself — <span className="italic">over 200 international awards, projects</span></h3>
+<h2 className="text-3xl font-bold mb-2">AI-Powered Growth. Real Results.</h2>
+<h3 className="text-2xl font-semibold">From Social Management to Viral Campaigns — All Under One Roof</h3>
           </div>
 
           <div className="max-w-4xl mx-auto mb-12 relative">
@@ -172,280 +199,180 @@ export default function Home() {
 </div>
 
 
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <p className="text-gray-700">
-              We're not just another production company. While others rush through projects for quick profits, we focus on quality, creativity, and affordability. Imagine producing a full-scale 3D game show, 6D experience for $80,000, while others spend 3x on camera gear.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            <div className="border border-gray-200 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4">"Award-Winning Visuals That Drive Impact - for Brand"</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <div className="text-teal-500 mr-2">•</div>
-                  <p>Fast, streamlined production tailored to your brand's identity</p>
-                </li>
-                <li className="flex items-start">
-                  <div className="text-teal-500 mr-2">•</div>
-                  <p>Creative excellence backed by 200+ industry awards</p>
-                </li>
-                <li className="flex items-start">
-                  <div className="text-teal-500 mr-2">•</div>
-                  <p>Premium results at half the cost of competitors</p>
-                </li>
-              </ul>
-            </div>
-            <div className="border border-gray-200 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4">"Your Production Partner for High-Impact Video - for Agency"</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <div className="text-teal-500 mr-2">•</div>
-                  <p>Fast, streamlined production tailored to your brand's identity</p>
-                </li>
-                <li className="flex items-start">
-                  <div className="text-teal-500 mr-2">•</div>
-                  <p>Creative excellence backed by 200+ industry awards</p>
-                </li>
-                <li className="flex items-start">
-                  <div className="text-teal-500 mr-2">•</div>
-                  <p>Premium results at half the cost of competitors</p>
-                </li>
-              </ul>
-            </div>
-          </div>
+       
         </div>
       </section>
 
 
       {/* Stats Section */}
-      <section ref={statsRef} className="bg-[#022729] text-white py-16 pt-24">
-<div className="container mx-auto max-w-4xl px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Left column */}
-            <div className="border-r border-gray-700 pr-8">
-              <h2 className="text-3xl font-bold mb-2">Vidico at a glance.</h2>
-              <p className="text-gray-400 text-sm mb-4">
-                See real results, created by the creative production company consistently rated five stars.
-              </p>
-            </div>
-            
-            {/* Middle column */}
-            <div className="grid grid-rows-2 gap-8 border-r border-gray-700 pr-4">
-              <div>
-                <div className="text-4xl font-bold mb-1">{stats.projects}+</div>
-                <div className="text-sm text-gray-400">Creative projects</div>
-                <a href="#" className="text-xs flex items-center text-gray-400 mt-2 hover:text-white">
-                  See verified reviews <span className="ml-1">→</span>
-                </a>
-              </div>
-              
-              <div>
-                <div className="text-4xl font-bold mb-1">{stats.reviews}+</div>
-                <div className="text-sm text-gray-400">{stats.reviews_avg}/5 reviews</div>
-                <a href="#" className="text-xs flex items-center text-gray-400 mt-2 hover:text-white">
-                  See verified reviews <span className="ml-1">→</span>
-                </a>
-              </div>
-            </div>
-            
-            {/* Right column */}
-            <div className="grid grid-rows-3 gap-6">
-              <div>
-                <div className="text-3xl font-bold mb-1">{stats.views / 1000} billion</div>
-                <div className="text-sm text-gray-400">Product views</div>
-              </div>
-              
-              <div>
-                <div className="text-3xl font-bold mb-1">{stats.success_stories}+</div>
-                <div className="text-sm text-gray-400">Success stories</div>
-                <a href="#" className="text-xs flex items-center text-gray-400 mt-2 hover:text-white">
-                  See case studies <span className="ml-1">→</span>
-                </a>
-              </div>
-              
-              <div>
-                <div className="text-3xl font-bold mb-1">{stats.awards}+</div>
-                <div className="text-sm text-gray-400">Awards (Vimeo, B&T, Davey)</div>
-                <a href="#" className="text-xs flex items-center text-gray-400 mt-2 hover:text-white">
-                  See winning projects <span className="ml-1">→</span>
-                </a>
-              </div>
+  <section ref={statsRef} className="bg-[#022729] text-white py-20">
+      <div className="container mx-auto max-w-4xl px-6 text-center">
+        <h2 className="text-4xl font-bold mb-4">Empire Results in Numbers</h2>
+        <p className="text-gray-300 text-lg mb-12 max-w-2xl mx-auto">
+          Backed by performance. Empire Results has delivered high-impact strategies, creative execution, and real business growth — consistently.
+        </p>
 
-              <div>
-                <div className="text-3xl font-bold mb-1">{stats.high_view_rate}%+</div>
-                <div className="text-sm text-gray-400">We get high view rates</div>
-                <a href="#" className="text-xs flex items-center text-gray-400 mt-2 hover:text-white">
-                  Check it out <span className="ml-1">→</span>
-                </a>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="bg-white/10 p-8 rounded-lg shadow-md hover:bg-white/20 transition">
+            <div className="text-3xl font-bold mb-2">
+              ${stats.revenue.toLocaleString()}
             </div>
+            <div className="text-gray-300 text-sm">Revenue from one project</div>
+          </div>
+
+          <div className="bg-white/10 p-8 rounded-lg shadow-md hover:bg-white/20 transition">
+            <div className="text-3xl font-bold mb-2">
+              {stats.projects}+
+            </div>
+            <div className="text-gray-300 text-sm">Projects Completed</div>
+          </div>
+
+          <div className="bg-white/10 p-8 rounded-lg shadow-md hover:bg-white/20 transition">
+            <div className="text-3xl font-bold mb-2">
+              {stats.years}
+            </div>
+            <div className="text-gray-300 text-sm">Years of Excellence</div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* Testimonials Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-2">Trusted by global brands,</h2>
-            <h3 className="text-2xl">whose products you use every day.</h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Testimonial 1 */}
-            <div className="bg-gray-100 rounded-lg overflow-hidden">
-           <div className="relative h-64 bg-gray-300">
-    <img
-      src="https://i.pravatar.cc/300?img=4"
-      alt="Jane Zhang"
-      className="object-cover w-full h-full"
-    />
-    <div className="absolute bottom-2 left-2 bg-white rounded-full px-3 py-1 flex items-center text-sm font-semibold shadow">
-      <span className="mr-1">▶</span> 1:02
-    </div>
-  </div>
-              <div className="p-6">
-                <h4 className="font-bold">Karim Zuhri</h4>
-                <p className="text-gray-600 mb-2">Chief Marketing Officer</p>
-                <div className="flex items-center mb-4">
-                  <div className="bg-gray-800 h-5 w-5 rounded-sm mr-2"></div>
-                  <span className="text-sm">cascade</span>
-                </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  With Vidico, every single detail matters. They make sure everything looks clean, beautiful and very professional, really caring about the outcome and following up constantly. If you need to scale, you can be happy with the results for customer-focused teams.
-                </p>
-                <ul className="text-xs text-gray-600 space-y-1 mb-4">
-                  <li>• Avg. production time: 3hrs (33% avg. rate)</li>
-                  <li>• Over 1.4 million views on YouTube</li>
-                </ul>
-                <a href="#" className="inline-block text-blue-600 font-medium text-sm">
-                  Read full case study →
-                </a>
-              </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="bg-gray-100 rounded-lg overflow-hidden">
-              <div className="relative h-64 bg-gray-300">
-    <img
-      src="https://i.pravatar.cc/300?img=5"
-      alt="Jane Zhang"
-      className="object-cover w-full h-full"
-    />
-    <div className="absolute bottom-2 left-2 bg-white rounded-full px-3 py-1 flex items-center text-sm font-semibold shadow">
-      <span className="mr-1">▶</span> 1:02
-    </div>
-  </div>
-              <div className="p-6">
-                <h4 className="font-bold">Adam Hender</h4>
-                <p className="text-gray-600 mb-2">Senior Video Operations Manager</p>
-                <div className="flex items-center mb-4">
-                  <div className="bg-gray-800 h-5 w-5 rounded-sm mr-2"></div>
-                  <span className="text-sm">DigitalOcean</span>
-                </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  The ROI we were getting, the cost per acquisition and the ARR just for the views have really been effective. The scale has been our pet condition when it comes to working with our various partners, both and producing our platform with this video.
-                </p>
-                <ul className="text-xs text-gray-600 space-y-1 mb-4">
-                  <li>• Over 3.7 million views on YouTube</li>
-                  <li>• Lowered CAC</li>
-                </ul>
-                <a href="#" className="inline-block text-blue-600 font-medium text-sm">
-                  Read full case study →
-                </a>
-              </div>
-            </div>
-
-           {/* Testimonial 3 */}
-<div className="bg-gray-100 rounded-lg overflow-hidden shadow-md max-w-sm mx-auto">
-  <div className="relative h-64 bg-gray-300">
-    <img
-      src="https://i.pravatar.cc/300?img=8"
-      alt="Jane Zhang"
-      className="object-cover w-full h-full"
-    />
-    <div className="absolute bottom-2 left-2 bg-white rounded-full px-3 py-1 flex items-center text-sm font-semibold shadow">
-      <span className="mr-1">▶</span> 1:02
-    </div>
-  </div>
-  <div className="p-6">
-    <h4 className="font-bold text-lg mb-1">Jane Zhang</h4>
-    <p className="text-gray-600 mb-4">Product Marketing Manager</p>
-
-    <div className="flex items-center mb-4">
-      <div className="bg-gray-800 h-5 w-5 rounded-sm mr-2"></div>
-      <span className="text-sm font-semibold">SHIFT</span>
-    </div>
-
-    <p className="text-gray-700 text-sm mb-4 leading-relaxed">
-      The Vidico team is a joy to work with — talented copywriters and animators, seamless communication, and timely delivery despite a tight deadline. Their videos explain our features simply, beautifully, and we'd gladly work with them (Michael and the team again).
+    {/* Beta Program Section */}
+<section className="py-16 bg-white">
+  <div className="container mx-auto px-4 text-center">
+    <h2 className="text-3xl font-bold mb-4">
+      We’re currently helping 4 businesses grow organically—
+    </h2>
+    <p className="text-xl text-gray-600 mb-12">
+      Check back soon to see their progress!
     </p>
 
-    <ul className="text-xs text-gray-600 space-y-1 mb-4 list-disc list-inside">
-      <li>5x commendable produced and hosted for USA</li>
-    </ul>
+    <div className="relative w-[400px] h-[400px] mx-auto">
 
-    <a
-      href="#"
-      className="inline-block text-blue-600 font-medium text-sm hover:underline"
-    >
-      Read full case study →
-    </a>
-  </div>
-</div>
+      {/* Orbit Rings (Gray Lines) */}
+      <div className="absolute inset-0 rounded-full border border-gray-300 opacity-50"></div>
+      <div className="absolute inset-[20px] rounded-full border border-gray-300 opacity-50"></div>
+      <div className="absolute inset-[40px] rounded-full border border-gray-300 opacity-50"></div>
+      <div className="absolute inset-[60px] rounded-full border border-gray-300 opacity-50"></div>
 
-          </div>
-
-          <div className="text-center mt-12">
-            <button className="bg-[#022729] text-white px-8 py-3 rounded-full font-medium">
-              View all studies
-            </button>
-          </div>
+      {/* Center Logo */}
+      <div className="absolute top-1/2 left-1/2 w-28 h-28 rounded-full bg-[#022729] flex items-center justify-center shadow-2xl transform -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center">
+          <img src="/Logo.png" alt="Logo" className="h-10 w-auto" />
         </div>
-      </section>
+      </div>
+
+      {/* Strategy 1 - Social Media */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+        <div className="w-20 h-20 rounded-full bg-white shadow-md flex flex-col items-center justify-center text-xs font-medium">
+          <div className="w-10 h-10 bg-[#022729] text-white rounded-full flex items-center justify-center shadow-lg">
+            A
+          </div>
+          <span className="mt-1 text-[11px] text-gray-700">Social Media</span>
+        </div>
+      </div>
+
+      {/* Strategy 2 - Growth Systems */}
+      <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+        <div className="w-20 h-20 rounded-full bg-white shadow-md flex flex-col items-center justify-center text-xs font-medium">
+          <div className="w-10 h-10 bg-[#022729] text-white rounded-full flex items-center justify-center shadow-lg">
+            B
+          </div>
+          <span className="mt-1 text-[11px] text-gray-700">Growth Systems</span>
+        </div>
+      </div>
+
+      {/* Strategy 3 - AI Content */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+        <div className="w-20 h-20 rounded-full bg-white shadow-md flex flex-col items-center justify-center text-xs font-medium">
+          <div className="w-10 h-10 bg-[#022729] text-white rounded-full flex items-center justify-center shadow-lg">
+            C
+          </div>
+          <span className="mt-1 text-[11px] text-gray-700">AI Content</span>
+        </div>
+      </div>
+
+      {/* Strategy 4 - Paid Ads */}
+      <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+        <div className="w-20 h-20 rounded-full bg-white shadow-md flex flex-col items-center justify-center text-xs font-medium">
+          <div className="w-10 h-10 bg-[#022729] text-white rounded-full flex items-center justify-center shadow-lg">
+            D
+          </div>
+          <span className="mt-1 text-[11px] text-gray-700">Paid Ads</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div className="mt-12">
+      <button className="bg-[#022729] text-white px-8 py-3 rounded-full font-medium">
+        View Upcoming Results
+      </button>
+    </div>
+  </div>
+</section>
+
+
+
+
+
 
       {/* Our work */}
 
-  <section className="py-20 bg-[#022729] text-white">
+ <section className="py-20 bg-[#022729] text-white">
   <div className="max-w-4xl mx-auto px-4">
     <div className="flex flex-col md:flex-row justify-between items-center mb-12">
       <div>
         <h2 className="text-3xl font-bold mb-1">EyeShow Studios</h2>
         <p className="text-gray-300">Where Creativity Meets Award-Winning Production.</p>
       </div>
-      <button className="mt-6 md:mt-0 bg-white text-[#022729] px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition duration-300 focus:outline-none focus:ring-2 focus:ring-white">
+     <a href='/About'>
+       <button className="mt-6 md:mt-0 bg-white text-[#022729] px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition duration-300 focus:outline-none focus:ring-2 focus:ring-white">
         Explore our Services
       </button>
+     </a>
     </div>
 
-    {/* Image Grid */}
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {/* Projects Grid */}
+    <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
       {[
-        { title: "Commercials", img: "./project3.png" },
-        { title: "TV Ads", img: "./project1.png" },
-        { title: "Promotion", img: "./project2.png" },
-        { title: "Educational", img: "./project5.png", tall: true },
-        { title: "CG & VFX", img: "./project4.png" },
+        {
+          title: "Diamond Law Center",
+          img: "/diamondlawcenter.png",
+          link: "https://diamondlawcenter.net/",
+        },
+        {
+          title: "RiverRock Medical",
+          img: "/riverrockmedical.png",
+          link: "https://riverrockmedical.com/",
+        },
+        {
+          title: "Big Fish Results",
+          img: "/bigfishresults.png",
+          link: "https://bigfishresults.com/",
+        },
+        {
+          title: "Tony Guarnaccia",
+          img: "/tonyguarnaccia.png",
+          link: "https://tonyguarnaccia.com/",
+        },
       ].map((item, idx) => (
-        <div
+        <a
           key={idx}
-          className={`relative overflow-hidden rounded-lg group ${
-            item.tall ? "row-span-2 md:row-span-1 md:col-span-2" : ""
-          }`}
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative rounded-lg overflow-hidden border-2 border-black shadow-lg group p-4 bg-white hover:scale-[1.02] transition"
         >
           <img
             src={item.img}
             alt={item.title}
-            className="w-full h-full object-cover aspect-[4/3]"
+            className="w-full h-40 object-contain rounded-lg bg-white"
           />
-          <div className="absolute bottom-2 left-2 text-white text-sm font-semibold">
+          <div className="mt-4 text-center text-[#022729] font-semibold text-lg">
             {item.title}
           </div>
-          <div className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-white/40 flex items-center justify-center text-white text-xs group-hover:bg-white/70 transition">
-            ⭕
-          </div>
-        </div>
+        </a>
       ))}
     </div>
   </div>
@@ -453,94 +380,42 @@ export default function Home() {
 
 
 
+
       {/* Contact Form */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold">Contact Our <span className="text-[#022729]">team</span></h2>
-            <p className="text-gray-600">Let's Create Something Extraordinary!</p>
+   <section className="py-16 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold">Contact Our <span className="text-[#022729]">team</span></h2>
+          <p className="text-gray-600">Let's Create Something Extraordinary!</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Enter Your First Name" required className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500" />
+            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Enter Your Last Name" required className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500" />
           </div>
 
-          <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="Enter Your First Name"
-                  className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"
-                  required
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Enter Your Last Name"
-                  className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"
-                  required
-                />
-              </div>
-            </div>
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter Your Phone" className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500" />
+            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter Your Email" required className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500" />
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Enter Your Phone"
-                  className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"
-                />
-              </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter Your Email"
-                  className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"
-                  required
-                />
-              </div>
-            </div>
+          <div className="mb-6">
+            <input type="text" name="company" value={formData.company} onChange={handleChange} placeholder="Enter Your Company Name" className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500" />
+          </div>
 
-            <div className="mb-6">
-              <input
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                placeholder="Enter Your Company Name"
-                className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"
-              />
-            </div>
+          <div className="mb-8">
+            <textarea name="details" value={formData.details} onChange={handleChange} placeholder="Request Details" rows="4" className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"></textarea>
+          </div>
 
-            <div className="mb-8">
-              <textarea
-                name="details"
-                value={formData.details}
-                onChange={handleChange}
-                placeholder="Request Details"
-                rows="4"
-                className="w-full border-b border-gray-300 py-2 px-3 focus:outline-none focus:border-teal-500"
-              ></textarea>
-            </div>
-
-            <div className="text-center">
-              <button type="submit" className="bg-[#022729] text-white px-12 py-3 rounded-full hover:bg-teal-800 transition-colors">
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
+          <div className="text-center">
+            <button type="submit" className="bg-[#022729] text-white px-12 py-3 rounded-full hover:bg-teal-800 transition-colors">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
 
     
     </main>
