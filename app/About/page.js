@@ -147,7 +147,7 @@ export default function About() {
     {/* Left Side: Founder Image */}
     <div className="mb-8 md:mb-0 md:w-1/3">
       <img
-        src="/your-photo.jpg" // Replace with your actual photo
+        src="/CEO.png" // Replace with your actual photo
         alt="Founder"
         className="rounded-lg object-cover w-full h-auto shadow-md"
       />

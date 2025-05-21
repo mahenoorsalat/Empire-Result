@@ -32,29 +32,30 @@ const Footer = () => {
               <p className="text-sm text-gray-500">©2023 All Rights Reserved</p>
             </div>
             <div>
-              <h3 className="font-bold text-lg mb-4">Shop</h3>
+              <h3 className="font-bold text-lg mb-4">Pages</h3>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-[#022729]">Video Production</a></li>
-                <li><a href="#" className="hover:text-[#022729]">Animation Services</a></li>
-                <li><a href="#" className="hover:text-[#022729]">VFX Creation</a></li>
-                <li><a href="#" className="hover:text-[#022729]">Motion Graphics</a></li>
+                <li><a href="/" className="hover:text-[#022729]">Home</a></li>
+                <li><a href="/About" className="hover:text-[#022729]">How It Work</a></li>
+                <li><a href="/Portfolio" className="hover:text-[#022729]">Portfolio</a></li>
+                <li><a href="/contact" className="hover:text-[#022729]">Contact Us</a></li>
               </ul>
             </div>
             <div>
               <h3 className="font-bold text-lg mb-4">Resources</h3>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-[#022729]">Guides</a></li>
-                <li><a href="#" className="hover:text-[#022729]">Articles</a></li>
-                <li><a href="#" className="hover:text-[#022729]">FAQs</a></li>
-                <li><a href="#" className="hover:text-[#022729]">Pricing</a></li>
+                <li>Guides</li>
+                <li>Articles</li>
+                <li>FAQs</li>
+                <li>Pricing</li>
               </ul>
             </div>
-            <div>
-              <h3 className="font-bold text-lg mb-4">Legal</h3>
+              <div>
+              <h3 className="font-bold text-lg mb-4">Shop</h3>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-[#022729]">Terms of Use</a></li>
-                <li><a href="#" className="hover:text-[#022729]">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#022729]">Cookie Policy</a></li>
+                <li>Video Production</li>
+                <li>Animation Services</li>
+                <li>VFX Creation</li>
+                <li>Motion Graphics</li>
               </ul>
             </div>
           </div>

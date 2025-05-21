@@ -108,7 +108,7 @@ Let's collaborate on your next award-winning video production project           
               
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <div className="bg-[#022729]  rounded-full p-3 mr-4">
+                  {/* <div className="bg-[#022729]  rounded-full p-3 mr-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
@@ -116,7 +116,7 @@ Let's collaborate on your next award-winning video production project           
                   <div>
                     <h3 className="font-bold text-lg">Phone</h3>
                     <p className="text-gray-600">(555) 123-4567</p>
-                  </div>
+                  </div> */}
                 </div>
                 
                 <div className="flex items-start">
@@ -140,7 +140,7 @@ Let's collaborate on your next award-winning video production project           
                   </div>
                   <div>
                     <h3 className="font-bold text-lg">Office Location</h3>
-                    <p className="text-gray-600">123 Production Avenue, Suite 456<br />Los Angeles, CA 90028</p>
+                    <p className="text-gray-600">Austin, Texas</p>
                   </div>
                 </div>
               </div>

@@ -323,7 +323,7 @@ export default function Home() {
   <div className="max-w-4xl mx-auto px-4">
     <div className="flex flex-col md:flex-row justify-between items-center mb-12">
       <div>
-        <h2 className="text-3xl font-bold mb-1">EyeShow Studios</h2>
+        <h2 className="text-3xl font-bold mb-1">Empire Results</h2>
         <p className="text-gray-300">Where Creativity Meets Award-Winning Production.</p>
       </div>
      <a href='/About'>
