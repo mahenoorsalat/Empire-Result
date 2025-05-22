@@ -97,48 +97,65 @@ export default function About() {
         </div>
       </section>
 
-      {/* Benefits Section
-      <section className="py-20 bg-black text-white flex items-center justify-center min-h-screen">
-        <div className="max-w-4xl mx-auto px-6 w-full">
-          <h2 className="text-4xl font-bold mb-4 text-center">
-            Your One-Stop Growth Partner
-          </h2>
-          <p className="text-lg mb-12 text-gray-300 text-center">
-            Everything you need to scale—from social to SEO, design to DMs.
-          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                icon: "⚙️",
-                title: "Done-For-You Growth Engine",
-                desc: "We align content, community, and conversion under one roof so your brand never misses a beat—or a lead.",
-              },
-              {
-                icon: "⏱️",
-                title: "Speed Without Sacrifice",
-                desc: "Weekly calendars, rapid reels, and lightning-fast revisions so your brand stays agile and top-of-mind.",
-              },
-              {
-                icon: "📱",
-                title: "Scalable for Every Stage",
-                desc: "From startups to scaling brands, our systems flex with you—so you only pay for what you actually need.",
-              },
-              {
-                icon: "💴",
-                title: "Max ROI, No Fluff",
-                desc: "No bloated retainers. Just efficient, performance-obsessed systems that drive clicks, leads, and conversions.",
-              }
-            ].map((item, i) => (
-              <div key={i}>
-                <div className="text-yellow-500 text-3xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-gray-300">{item.desc}</p>
-              </div>
-            ))}
+{/* The V.I.S.I.O.N. Method™ Section */}
+<section className="py-20 bg-white">
+  <div className="max-w-6xl mx-auto px-6 text-center">
+    <h2 className="text-3xl md:text-4xl font-bold mb-6">
+     The V.I.S.I.O.N. Method™
+    </h2>
+    <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-12">
+      Our creative framework for helping local brands and content creators grow organically with clarity, consistency, and content that converts.
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
+      {[
+        {
+          letter: "V",
+          title: "Visual Identity",
+          desc: "Establish a consistent, on-brand aesthetic and creative direction that reflects your client’s core values and personality.",
+        },
+        {
+          letter: "I",
+          title: "Intentional Strategy",
+          desc: "Build a content plan tailored to your client’s goals—whether that’s engagement, local recognition, or monetization.",
+        },
+        {
+          letter: "S",
+          title: "Storytelling Frameworks",
+          desc: "Use narrative-driven content formats to deepen connection and showcase what makes the brand or creator unique.",
+        },
+        {
+          letter: "I",
+          title: "Implementation & Production",
+          desc: "Shoot, edit, and post high-quality content across the right platforms using a streamlined, efficient process.",
+        },
+        {
+          letter: "O",
+          title: "Organic Growth Loops",
+          desc: "Spark growth using engagement tactics, community interaction, and trending formats with a purpose.",
+        },
+        {
+          letter: "N",
+          title: "Next-Level Optimization",
+          desc: "Use analytics and testing to improve performance, spot growth opportunities, and evolve the strategy monthly.",
+        },
+      ].map((item, i) => (
+        <div key={i} className="bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="flex items-center mb-4">
+            <div className="w-10 h-10 rounded-full bg-[#022729] text-white flex items-center justify-center font-bold text-lg mr-4">
+              {item.letter}
+            </div>
+            <h3 className="text-xl font-semibold">{item.title}</h3>
           </div>
+          <p className="text-gray-700">{item.desc}</p>
         </div>
-      </section> */}
+      ))}
+    </div>
+  </div>
+</section>
+
+      
 
      
 {/* Meet the Founder Section */}
@@ -176,7 +193,7 @@ export default function About() {
 
       {/* CTA Button */}
       <a
-        href="#contact" // Update this to your booking link or contact section
+        href="https://calendly.com/jeremiah-empireresults/new-meeting" // Update this to your booking link or contact section
         className="inline-block bg-[#022729] hover:bg-teal-700 text-white py-3 px-8 rounded-full font-medium"
       >
         Book a Call

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -58,7 +58,7 @@ const Navbar = () => {
             </li>
             <li>
               <a href="/About" className="hover:text-yellow-500">
-                How It Work
+                How It Works
               </a>
             </li>
             <li>
@@ -77,7 +77,7 @@ const Navbar = () => {
         {/* Desktop CTA */}
         <div className="hidden md:block">
           <a
-            href="/contact"
+            href="https://calendly.com/jeremiah-empireresults/new-meeting"
             className="bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-300 transition"
           >
             Book a Call
@@ -124,7 +124,7 @@ const Navbar = () => {
           </li>
           <li>
             <a href="/About" className="block hover:text-yellow-500">
-              How It Work
+              How It Works
             </a>
           </li>
           <li>
@@ -144,7 +144,7 @@ const Navbar = () => {
           <div className="text-sm">Follow us on</div>
           <div className="flex space-x-4 text-2xl">
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/jeremiah-guarnaccia/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-yellow-500"
@@ -152,16 +152,16 @@ const Navbar = () => {
               <FaLinkedin />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://www.instagram.com/empireresults/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-yellow-500"
             >
-              <FaTwitter />
+              <FaInstagram />
             </a>
           </div>
           <a
-            href="/contact"
+            href="https://calendly.com/jeremiah-empireresults/new-meeting"
             className="inline-block bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-300 transition"
           >
             Book a Call
