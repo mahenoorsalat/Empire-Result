@@ -4,6 +4,7 @@ import { useState , useEffect , useRef} from 'react';
 import Image from 'next/image';
 
 export default function Home() {
+    const [showVideo, setShowVideo] = useState(false);
    const [stats, setStats] = useState({
     revenue: 0,
     projects: 0,
@@ -178,30 +179,54 @@ export default function Home() {
 
 
       {/* Our Work Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-<h2 className="text-3xl font-bold mb-2">AI-Powered Growth. Real Results.</h2>
-<h3 className="text-2xl font-semibold">From Social Management to Viral Campaigns — All Under One Roof</h3>
-          </div>
-
-          <div className="max-w-4xl mx-auto mb-12 relative">
-  <img src="/reel.png" alt="Logo" className="mx-auto block" />
-
-  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-    <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full">
-      <span>Watch Our Reel</span>
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-      </svg>
-    </button>
-  </div>
-</div>
-
-
-       
+          <section className="py-16 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-2">AI-Powered Growth. Real Results.</h2>
+          <h3 className="text-2xl font-semibold">
+            From Social Management to Viral Campaigns — All Under One Roof
+          </h3>
         </div>
-      </section>
+
+        <div className="max-w-3xl mx-auto mb-12 relative">
+          {!showVideo ? (
+            <>
+              <img src="/reel.png" alt="Reel thumbnail" className="w-full rounded-md shadow-lg" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  onClick={() => setShowVideo(true)}
+                  className="flex items-center bg-white hover:bg-gray-200 text-black px-6 py-3 rounded-full shadow-md"
+                >
+                  <span className="mr-2">Watch Our Reel</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg"
+                src="https://drive.google.com/file/d/1SkQyUklk9V8oxiZLXQ6co6EqYowMuZZW/preview"
+                allow="autoplay"
+                allowFullScreen
+                title="Our Work Reel"
+              ></iframe>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
 
 
       {/* Stats Section */}
