@@ -61,6 +61,18 @@ const Footer = () => {
           </div>
         </div>
       </footer>
+
+<div class="text-center pb-6">
+    <span class="block text-sm text-gray-700 sm:text-center dark:text-gray-400">
+        © 2025 
+        <a href="#" class="hover:underline">Empire Results</a>. All Rights Reserved.
+        Developed by 
+        <a href="https://www.linkedin.com/in/mahenoor-salat/" target="_blank" class="text-blue-700 hover:underline">
+            Mahenoor Salat
+        </a>
+    </span>
+</div>
+
         </div>
     );
 }
